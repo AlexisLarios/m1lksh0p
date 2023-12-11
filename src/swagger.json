@@ -1,0 +1,1492 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "REST API m1lkSh0p",
+        "description": "<html><body>Esta es la documentación de la API para el punto de venta de m1lkSh0p.<p>Para poder usar esta API es necesario solicitar el token y con esto poder utilizar los servicios proporcionados.</p><br><p><b>Autenticación y token de API</b></p><p>PIPO MAN STUDIOS proporciona el api-token. Una vez que haya creado y confirmado su cuenta.</p></body></html>",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "",
+
+    "tags": [
+        {
+            "name": "Usuarios",
+            "description": "API para obtener información de los usuarios de la tienda"
+        },
+
+        {
+            "name": "Productos",
+            "description": "API para obtener información de los productos de la tienda"
+        },
+		
+		{
+            "name": "Ventas",
+            "description": "API para obtener información de las ventas de la tienda"
+        },
+		
+		{
+            "name": "Roles",
+            "description": "API para obtener información de los roles de los trabajadores"
+        },
+		
+		{
+            "name": "Modalidad",
+            "description": "API para obtener información de las modalidades de venta"
+        },
+		
+		{
+            "name": "Clientes",
+            "description": "API para obtener información de los clientes"
+        }
+		
+		
+    ],
+
+    "schemes": [
+        "http"
+    ],
+    "consumes":[
+        "application/json"
+    ],
+    "produces" :[
+        "application/json"
+    ],
+    "paths":
+    {
+
+        "/api/usuarios/":{
+
+            "get":{
+                "tags": ["Usuarios"],
+                "summary": "Listado de todos los usuarios que existen",
+                "description": "<p>Servicio que devuelve la información detallada de todos usuarios que existen.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la tienda?</strong></em></p>",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "examples":{
+                            "application/json":[
+
+                                {
+
+                                    "id": 4,
+                                    "nombre": "angel cruz",
+                                    "correo": "angel@gmail.com",
+                                    "password": "789*",
+                                    "idRol": 2
+
+                                }
+
+                            ]
+                        },
+
+                        "schema":{
+                            "$ref": "#/definitions/Usuarios"
+                        }
+
+                    }
+                }
+            }
+
+        },
+
+        "/api/usuarios/{id}":{
+            "get":{
+
+                "tags":[
+                    "Usuarios"
+                ],
+                "summary": "Informacion asociada al usuario, si es que existe en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada del usuario solicitado.</p><p>&nbsp;</p><p><em><strong>¿Cuál es el usuario de este id?</strong></em></p> ",
+                "responses":{
+                    "200":{
+                        "description": "OKI DOKI",
+                        "examples":{
+                            "application/json":[
+                                {
+                                    "id": 2,
+                                    "nombre": "angel cruz",
+                                    "correo": "angel@gmail.com",
+                                    "password": "123",
+                                    "idRol": 2
+                                }
+                            ]
+                        },
+                        "schema":{
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    },
+                    "403":{
+                        "description": "prohibido"
+                    }
+                },
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default" : "1"
+                    }
+                ]
+
+            }
+        },
+
+        "/api/usuarios/create":{
+
+            "post":{
+                "summary": "Creando un usuario",
+                "operationId": "create",
+                "produces":[
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuarios",
+                        "in": "body",
+                        "description": "Usuario agregado",
+                        "required": "true",
+                        "schema":{
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+                ],
+
+                "tags": ["Usuarios"],
+
+                "responses":{
+                    "200":{
+                        "description": "Insertado con exito"
+                    },
+
+                    "403":{
+                        "description": "Prohibido"
+                    }
+
+                }
+
+            }
+
+        },
+
+        "/api/usuarios/actualizar/{id}":{
+            "put":{
+                "summary": "Actualizar la información del usuario de la tienda",
+                "description": "<p>Servicio que permite editar la informaciòn del usuario de la tienda, dado el id el mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "4"
+                    },
+
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+
+                ],
+
+                "tags": ["Usuarios"],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                }
+
+            }
+        },
+
+		"/api/usuarios/eliminar/{id}":{
+            "delete": {
+                "tags": ["Usuarios"],
+                "summary": "Eliminar el usuario de la tienda dado su identificador",
+                "description": "<p>Servicio que elimina el usuario dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitosa?</strong></em></p>",
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },   
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters":[              
+                    {                          
+                        "name" : "id",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "identificador del usuario",
+                        "type" : "number", 
+                        "default" : "3"
+
+                    } ]
+                    
+            }
+        },
+
+
+        "/api/ventas/":{
+
+            "get":{
+                "tags": ["Ventas"],
+                "summary": "Listado de todos las ventas que existen",
+                "description": "<p>Servicio que devuelve la información detallada de todas las ventas que existen.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son las ventas existentes en la tienda?</strong></em></p>",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "examples":{
+                            "application/json":[
+
+                                {
+
+                                    "id": 4,
+									"idProducto": 1,
+									"cantidad": 10,
+									"idCliente": 1,
+									"idModalidad": 1,
+                                    "idCarrito": 2
+
+                                }
+
+                            ]
+                        },
+
+                        "schema":{
+                            "$ref": "#/definitions/Ventas"
+                        }
+
+                    }
+                }
+            }
+
+        },
+
+        "/api/ventas/{id}":{
+            "get":{
+
+                "tags":[
+                    "Ventas"
+                ],
+                "summary": "Informacion asociada a la venta, si es que existe en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de la venta solicitada.</p><p>&nbsp;</p><p><em><strong>¿Cuál es la venta de este id?</strong></em></p> ",
+                "responses":{
+                    "200":{
+                        "description": "OKI DOKI",
+                        "examples":{
+                            "application/json":[
+                                {
+                                    "id": 2,
+									"idProducto": 2,
+									"cantidad": 15,
+									"idCliente": 2,
+									"idModalidad": 2,
+                                    "idCarrito": 2
+                                }
+                            ]
+                        },
+                        "schema":{
+                            "$ref": "#/definitions/Venta"
+                        }
+                    },
+                    "403":{
+                        "description": "prohibido"
+                    }
+                },
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador de la venta",
+                        "type": "number",
+                        "default" : "1"
+                    }
+                ]
+
+            }
+        },
+
+        "/api/ventas/create":{
+
+            "post":{
+                "summary": "Creando una venta",
+                "operationId": "create",
+                "produces":[
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Ventas",
+                        "in": "body",
+                        "description": "Venta agregada",
+                        "required": "true",
+                        "schema":{
+                            "$ref": "#/definitions/NuevaVenta"
+                        }
+                    }
+                ],
+
+                "tags": ["Ventas"],
+
+                "responses":{
+                    "200":{
+                        "description": "Insertado con exito"
+                    },
+
+                    "403":{
+                        "description": "Prohibido"
+                    }
+
+                }
+
+            }
+
+        },
+
+        "/api/ventas/actualizar/{id}":{
+            "put":{
+                "summary": "Actualizar la información de la venta",
+                "description": "<p>Servicio que permite editar la informaciòn de la venta, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "identificador de la venta",
+                        "type": "number",
+                        "default": "2"
+                    },
+
+                    {
+                        "name": "Venta",
+                        "in": "body",
+                        "description": "Nombre de la venta",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/NuevaVenta"
+                        }
+                    }
+
+                ],
+
+                "tags": ["Ventas"],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                }
+
+            }
+        },
+
+		"/api/ventas/eliminar/{id}":{
+            "delete": {
+                "tags": ["Ventas"],
+                "summary": "Eliminar la venta dado su identificador",
+                "description": "<p>Servicio que elimina la venta dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitosa?</strong></em></p>",
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },   
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters":[              
+                    {                          
+                        "name" : "id",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "identificador de la venta",
+                        "type" : "number", 
+                        "default" : "3"
+
+                    } ]
+                    
+            }
+        },
+		
+
+        "/api/roles/":{
+
+            "get":{
+                "tags": ["Roles"],
+                "summary": "Listado de todos los roles que existen",
+                "description": "<p>Servicio que devuelve la información detallada de todas los roles que existen.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los roles existentes en la tienda?</strong></em></p>",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "examples":{
+                            "application/json":[
+
+                                {
+
+                                    "id": 2,
+									"roles": "vendedor"
+
+                                }
+
+                            ]
+                        },
+
+                        "schema":{
+                            "$ref": "#/definitions/Roles"
+                        }
+
+                    }
+                }
+            }
+
+        },
+
+        "/api/roles/{id}":{
+            "get":{
+
+                "tags":[
+                    "Roles"
+                ],
+                "summary": "Informacion asociada al rol, si es que existe en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada del rol solicitado.</p><p>&nbsp;</p><p><em><strong>¿Cuál es el rol de este id?</strong></em></p> ",
+                "responses":{
+                    "200":{
+                        "description": "OKI DOKI",
+                        "examples":{
+                            "application/json":[
+                                {
+                                    "id": 1,
+									"roles": "administrador"
+                                }
+                            ]
+                        },
+                        "schema":{
+                            "$ref": "#/definitions/Rol"
+                        }
+                    },
+                    "403":{
+                        "description": "prohibido"
+                    }
+                },
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del rol",
+                        "type": "number",
+                        "default" : "1"
+                    }
+                ]
+
+            }
+        },
+
+        "/api/roles/create":{
+
+            "post":{
+                "summary": "Creando un rol",
+                "operationId": "create",
+                "produces":[
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Rol",
+                        "in": "body",
+                        "description": "Rol agregado",
+                        "required": "true",
+                        "schema":{
+                            "$ref": "#/definitions/NuevoRol"
+                        }
+                    }
+                ],
+
+                "tags": ["Roles"],
+
+                "responses":{
+                    "200":{
+                        "description": "Insertado con exito"
+                    },
+
+                    "403":{
+                        "description": "Prohibido"
+                    }
+
+                }
+
+            }
+
+        },
+
+        "/api/roles/actualizar/{id}":{
+            "put":{
+                "summary": "Actualizar la información del rol",
+                "description": "<p>Servicio que permite editar la informaciòn del rol, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "identificador del rol",
+                        "type": "number",
+                        "default": "2"
+                    },
+
+                    {
+                        "name": "Venta",
+                        "in": "body",
+                        "description": "Nombre del rol",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/NuevoRol"
+                        }
+                    }
+
+                ],
+
+                "tags": ["Roles"],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                }
+
+            }
+        },
+
+		"/api/roles/eliminar/{id}":{
+            "delete": {
+                "tags": ["Roles"],
+                "summary": "Eliminar el rol dado su identificador",
+                "description": "<p>Servicio que elimina el rol dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitosa?</strong></em></p>",
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },   
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters":[              
+                    {                          
+                        "name" : "id",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "identificador del rol",
+                        "type" : "number", 
+                        "default" : "3"
+
+                    } ]
+                    
+            }
+        },
+
+
+        "/api/productos/":{
+
+            "get":{
+                "tags": ["Productos"],
+                "summary": "Listado de todos los productos que existen",
+                "description": "<p>Servicio que devuelve la información detallada de todas los productos que existen.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los productos existentes en la tienda?</strong></em></p>",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "examples":{
+                            "application/json":[
+
+                                {
+
+                                    "id": 1,
+									"nombre": "leche lala",
+									"precio": 20
+
+                                }
+
+                            ]
+                        },
+
+                        "schema":{
+                            "$ref": "#/definitions/Productos"
+                        }
+
+                    }
+                }
+            }
+
+        },
+
+        "/api/productos/{id}":{
+            "get":{
+
+                "tags":[
+                    "Productos"
+                ],
+                "summary": "Informacion asociada al producto, si es que existe en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada del producto solicitado.</p><p>&nbsp;</p><p><em><strong>¿Cuál es el producto de este id?</strong></em></p> ",
+                "responses":{
+                    "200":{
+                        "description": "OKI DOKI",
+                        "examples":{
+                            "application/json":[
+                                {
+                                    "id": 2,
+									"roles": "nutrileche",
+									"precio": 25
+                                }
+                            ]
+                        },
+                        "schema":{
+                            "$ref": "#/definitions/Producto"
+                        }
+                    },
+                    "403":{
+                        "description": "prohibido"
+                    }
+                },
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del producto",
+                        "type": "number",
+                        "default" : "1"
+                    }
+                ]
+
+            }
+        },
+
+        "/api/productos/create":{
+
+            "post":{
+                "summary": "Creando un producto",
+                "operationId": "create",
+                "produces":[
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Productos",
+                        "in": "body",
+                        "description": "Producto agregado",
+                        "required": "true",
+                        "schema":{
+                            "$ref": "#/definitions/NuevoProducto"
+                        }
+                    }
+                ],
+
+                "tags": ["Productos"],
+
+                "responses":{
+                    "200":{
+                        "description": "Insertado con exito"
+                    },
+
+                    "403":{
+                        "description": "Prohibido"
+                    }
+
+                }
+
+            }
+
+        },
+
+        "/api/productos/actualizar/{id}":{
+            "put":{
+                "summary": "Actualizar la información del producto",
+                "description": "<p>Servicio que permite editar la informaciòn del producto, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "identificador del producto",
+                        "type": "number",
+                        "default": "2"
+                    },
+
+                    {
+                        "name": "Producto",
+                        "in": "body",
+                        "description": "Nombre del producto",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/NuevoProducto"
+                        }
+                    }
+
+                ],
+
+                "tags": ["Productos"],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                }
+
+            }
+        },
+
+		"/api/productos/eliminar/{id}":{
+            "delete": {
+                "tags": ["Productos"],
+                "summary": "Eliminar el producto dado su identificador",
+                "description": "<p>Servicio que elimina el producto dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitosa?</strong></em></p>",
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },   
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters":[              
+                    {                          
+                        "name" : "id",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "identificador del producto",
+                        "type" : "number", 
+                        "default" : "3"
+
+                    } ]
+                    
+            }
+        },
+
+
+        "/api/modalidad/":{
+
+            "get":{
+                "tags": ["Modalidad"],
+                "summary": "Listado de todos las modalidades que existen",
+                "description": "<p>Servicio que devuelve la información detallada de todas las modalidades que existen.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son las modalidades existentes en la tienda?</strong></em></p>",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "examples":{
+                            "application/json":[
+
+                                {
+
+                                    "id": 2,
+									"nombre": "tarjeta"
+
+                                }
+
+                            ]
+                        },
+
+                        "schema":{
+                            "$ref": "#/definitions/Modalidades"
+                        }
+
+                    }
+                }
+            }
+
+        },
+
+        "/api/modalidad/{id}":{
+            "get":{
+
+                "tags":[
+                    "Modalidad"
+                ],
+                "summary": "Informacion asociada a la modalidad, si es que existe en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada de la modalidad solicitada.</p><p>&nbsp;</p><p><em><strong>¿Cuál es la modalidad de este id?</strong></em></p> ",
+                "responses":{
+                    "200":{
+                        "description": "OKI DOKI",
+                        "examples":{
+                            "application/json":[
+                                {
+                                    "id": 2,
+									"roles": "recibo"
+                                }
+                            ]
+                        },
+                        "schema":{
+                            "$ref": "#/definitions/Modalidad"
+                        }
+                    },
+                    "403":{
+                        "description": "prohibido"
+                    }
+                },
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador de la modalidad",
+                        "type": "number",
+                        "default" : "1"
+                    }
+                ]
+
+            }
+        },
+
+        "/api/modalidad/create":{
+
+            "post":{
+                "summary": "Creando una modalidad",
+                "operationId": "create",
+                "produces":[
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Modalidad",
+                        "in": "body",
+                        "description": "Modalidad agregado",
+                        "required": "true",
+                        "schema":{
+                            "$ref": "#/definitions/NuevaModalidad"
+                        }
+                    }
+                ],
+
+                "tags": ["Modalidad"],
+
+                "responses":{
+                    "200":{
+                        "description": "Insertado con exito"
+                    },
+
+                    "403":{
+                        "description": "Prohibido"
+                    }
+
+                }
+
+            }
+
+        },
+
+        "/api/modalidad/actualizar/{id}":{
+            "put":{
+                "summary": "Actualizar la información de la modalidad",
+                "description": "<p>Servicio que permite editar la informaciòn de la modalidad, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "identificador de la modalidad",
+                        "type": "number",
+                        "default": "2"
+                    },
+
+                    {
+                        "name": "Modalidad",
+                        "in": "body",
+                        "description": "Nombre de la modalidad",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/NuevaModalidad"
+                        }
+                    }
+
+                ],
+
+                "tags": ["Modalidad"],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                }
+
+            }
+        },
+
+		"/api/modalidad/eliminar/{id}":{
+            "delete": {
+                "tags": ["Modalidad"],
+                "summary": "Eliminar la modalidad dado su identificador",
+                "description": "<p>Servicio que elimina la modalidad dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitosa?</strong></em></p>",
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },   
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters":[              
+                    {                          
+                        "name" : "id",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "identificador de la modalidad",
+                        "type" : "number", 
+                        "default" : "3"
+
+                    } ]
+                    
+            }
+        },
+
+
+        "/api/clientes/":{
+
+            "get":{
+                "tags": ["Clientes"],
+                "summary": "Listado de todos los clientes que existen",
+                "description": "<p>Servicio que devuelve la información detallada de todas los clientes que existen.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los clientes existentes en la tienda?</strong></em></p>",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "examples":{
+                            "application/json":[
+
+                                {
+
+                                    "id": 1,
+									"nombre": "abarrotes el benito",
+									"domicilio": "chapultepec #10"
+
+                                }
+
+                            ]
+                        },
+
+                        "schema":{
+                            "$ref": "#/definitions/Clientes"
+                        }
+
+                    }
+                }
+            }
+
+        },
+
+        "/api/clientes/{id}":{
+            "get":{
+
+                "tags":[
+                    "Clientes"
+                ],
+                "summary": "Informacion asociada al cliente, si es que existe en la tienda.",
+                "description": "<p>Servicio que devuelve la información detallada del cliente solicitado.</p><p>&nbsp;</p><p><em><strong>¿Cuál es el cliente de este id?</strong></em></p> ",
+                "responses":{
+                    "200":{
+                        "description": "OKI DOKI",
+                        "examples":{
+                            "application/json":[
+                                {
+                                    "id": 1,
+									"roles": "abarrotes maria",
+									"domicilio": "jardines #6"
+                                }
+                            ]
+                        },
+                        "schema":{
+                            "$ref": "#/definitions/Cliente"
+                        }
+                    },
+                    "403":{
+                        "description": "prohibido"
+                    }
+                },
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del cliente",
+                        "type": "number",
+                        "default" : "1"
+                    }
+                ]
+
+            }
+        },
+
+        "/api/clientes/create":{
+
+            "post":{
+                "summary": "Creando un cliente",
+                "operationId": "create",
+                "produces":[
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Cliente",
+                        "in": "body",
+                        "description": "Cliente agregado",
+                        "required": "true",
+                        "schema":{
+                            "$ref": "#/definitions/NuevoCliente"
+                        }
+                    }
+                ],
+
+                "tags": ["Clientes"],
+
+                "responses":{
+                    "200":{
+                        "description": "Insertado con exito"
+                    },
+
+                    "403":{
+                        "description": "Prohibido"
+                    }
+
+                }
+
+            }
+
+        },
+
+        "/api/clientes/actualizar/{id}":{
+            "put":{
+                "summary": "Actualizar la información del cliente",
+                "description": "<p>Servicio que permite editar la informaciòn del cliente, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true",
+                        "description": "identificador del cliente",
+                        "type": "number",
+                        "default": "1"
+                    },
+
+                    {
+                        "name": "Cliente",
+                        "in": "body",
+                        "description": "Nombre del cliente",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/NuevoCliente"
+                        }
+                    }
+
+                ],
+
+                "tags": ["Clientes"],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                }
+
+            }
+        },
+
+		"/api/clientes/eliminar/{id}":{
+            "delete": {
+                "tags": ["Clientes"],
+                "summary": "Eliminar al cliente dado su identificador",
+                "description": "<p>Servicio que elimina al cliente dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitosa?</strong></em></p>",
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },   
+                    "403":{
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters":[              
+                    {                          
+                        "name" : "id",
+                        "in" : "path",
+                        "required" : true,
+                        "description" : "identificador del cliente",
+                        "type" : "number", 
+                        "default" : "3"
+
+                    } ]
+                    
+            }
+        }		
+
+
+    },
+
+    "definitions":{
+
+        "Usuario":{
+            "type": "object",
+            "properties":{
+			
+                "id":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al usuario"
+                },
+
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre del usuario"
+                },
+
+                "correo":{
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+
+                "password":{
+                    "type": "string",
+                    "description": "Password del usuario"
+                },
+
+                "idRol":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol"
+                }
+
+            }
+        },
+
+        "Usuarios":{
+            "type": "array",
+            "items":{
+                "$ref": "#/definitions/Usuario"
+            }
+        },
+
+
+        "NuevoUsuario":{
+            "type": "object",
+            "properties":{
+                
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre del usuario"
+                },
+
+                "correo":{
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+
+                "password":{
+                    "type": "string",
+                    "description": "Password del usuario"
+                },
+
+                "idRol":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al usuario"
+                }
+
+            }
+        },
+		
+        "Venta":{
+            "type": "object",
+            "properties":{
+			
+                "id":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar a la venta"
+                },
+				
+				"idProducto":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al producto"
+                },
+				
+				"cantidad":{
+                    "type": "number",
+                    "description": "Unidades de leche (por caja) en la venta"
+                },
+ 
+                "idCliente":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al comprador"
+                },
+				
+				"idModalidad":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar la modalidad de compra"
+                },
+
+				"idCarrito":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al carrito"
+                }
+
+            }
+        },
+
+        "Ventas":{
+            "type": "array",
+            "items":{
+                "$ref": "#/definitions/Venta"
+            }
+        },
+
+
+        "NuevaVenta":{
+            "type": "object",
+            "properties":{
+                				
+				"idProducto":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al producto"
+                },
+				
+				"cantidad":{
+                    "type": "number",
+                    "description": "Unidades de leche (por caja) en la venta"
+                },
+
+                "idCliente":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al comprador"
+                },
+				
+				"idModalidad":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar la modalidad de compra"
+                },
+
+				"idCarrito":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al carrito"
+                }
+
+            }
+        },
+		
+        "Rol":{
+            "type": "object",
+            "properties":{
+			
+                "id":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al rol"
+                },
+				
+                "roles":{
+                    "type": "string",
+                    "description": "Rol de la tienda"
+                }
+
+            }
+        },
+
+        "Roles":{
+            "type": "array",
+            "items":{
+                "$ref": "#/definitions/Rol"
+            }
+        },
+
+
+        "NuevoRol":{
+            "type": "object",
+            "properties":{
+                								
+                "rol":{
+                    "type": "string",
+                    "description": "Rol de la tienda"
+                }
+
+            }
+        },
+		
+        "Producto":{
+            "type": "object",
+            "properties":{
+			
+                "id":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al producto"
+                },
+				
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre del producto"
+                },
+				
+                "precio":{
+                    "type": "number",
+                    "description": "Precio del producto"
+                }
+
+            }
+        },
+
+        "Productos":{
+            "type": "array",
+            "items":{
+                "$ref": "#/definitions/Producto"
+            }
+        },
+
+
+        "NuevoProducto":{
+            "type": "object",
+            "properties":{
+                								
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre del producto"
+                },
+				
+                "precio":{
+                    "type": "number",
+                    "description": "Precio del producto"
+                }
+
+            }
+        },
+		
+		"Modalidad":{
+            "type": "object",
+            "properties":{
+			
+                "id":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar la modalidad"
+                },
+				
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre de la modalidad"
+                }
+
+            }
+        },
+
+        "Modalidades":{
+            "type": "array",
+            "items":{
+                "$ref": "#/definitions/Modalidad"
+            }
+        },
+
+
+        "NuevaModalidad":{
+            "type": "object",
+            "properties":{
+                								
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre de la modalidad"
+                }
+
+            }
+        },
+		
+		"Cliente":{
+            "type": "object",
+            "properties":{
+			
+                "id":{
+                    "type": "number",
+                    "description": "Codigo que permite identificar al cliente"
+                },
+				
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre del cliente"
+                },
+				
+                "domicilio":{
+                    "type": "string",
+                    "description": "Domicilio del cliente"
+                }
+
+            }
+        },
+
+        "Clientes":{
+            "type": "array",
+            "items":{
+                "$ref": "#/definitions/Cliente"
+            }
+        },
+
+
+        "NuevoCliente":{
+            "type": "object",
+            "properties":{
+                								
+                "nombre":{
+                    "type": "string",
+                    "description": "Nombre del cliente"
+                },
+				
+                "domicilio":{
+                    "type": "string",
+                    "description": "Domicilio del cliente"
+                }
+
+            }
+        }
+
+
+    }
+
+
+
+}
